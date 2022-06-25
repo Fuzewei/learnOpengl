@@ -16,8 +16,8 @@
     <Filter Include="res">
       <UniqueIdentifier>{338ac7ce-8d25-4e54-8192-ee25484bf1e0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="res\shaders">
-      <UniqueIdentifier>{268784e9-e112-4604-bd93-f0329cd8dcce}</UniqueIdentifier>
+    <Filter Include="res\shders">
+      <UniqueIdentifier>{eb3f3fcc-a9f3-4f57-bcd1-f2b5b1bb5d0a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -26,8 +26,8 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="src\shaders\base.shader">
-      <Filter>res\shaders</Filter>
+    <None Include="res\shaders\base.shader">
+      <Filter>res\shders</Filter>
     </None>
   </ItemGroup>
 </Project>
