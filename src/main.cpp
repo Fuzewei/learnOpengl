@@ -63,10 +63,10 @@ int main(void)
             /* Render here */
             glClear(GL_COLOR_BUFFER_BIT);
             GLCall(glUseProgram(program));
-            GLCall(glUniform4f(location, r, 0.3, 0.8, 1.0));
+            GLCall(glUniform4f(location, r, 0.25, 0.1, 1.0));
             vao.bind();
             ibo.bind();
-            GLCall(glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_INT, nullptr));
+            GLCall(glDrawElements(GL_TRIANGLES, ibo.getCount(), GL_UNSIGNED_INT, nullptr));
             if (r >= 1.0f)
             {
                 r -= 1.0f;
