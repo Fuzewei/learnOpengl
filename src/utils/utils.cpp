@@ -28,40 +28,40 @@
 }
 
  unsigned int compireShader(int type, const std::string& source)
-{
-    unsigned int id = glCreateShader(type);
-    const char* src = source.c_str();
-    glShaderSource(id, 1, &src, NULL);
-    glCompileShader(id);
-    int result;
-    glGetShaderiv(id, GL_COMPILE_STATUS, &result);
-    if (result == GL_FALSE)
-    {
-        int length;
-        glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length);
-        char* message = (char*)alloca(length * sizeof(char));
-        glGetShaderInfoLog(id, length, &length, message);
-        std::cout << "Falied co compile:" << (type == GL_VERTEX_SHADER ? " vertex shader" : "fragement shader")
-            << std::endl;
-        std::cout << message << std::endl;
-    }
-    return id;
-}
+ {
+     unsigned int id = glCreateShader(type);
+     const char* src = source.c_str();
+     GLCall(glShaderSource(id, 1, &src, NULL));
+     GLCall(glCompileShader(id));
+     int result;
+     glGetShaderiv(id, GL_COMPILE_STATUS, &result);
+     if (result == GL_FALSE)
+     {
+         int length;
+         glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length);
+         char* message = (char*)alloca(length * sizeof(char));
+         glGetShaderInfoLog(id, length, &length, message);
+         std::cout << "Falied co compile:" << (type == GL_VERTEX_SHADER ? " vertex shader" : "fragement shader")
+             << std::endl;
+         std::cout << message << std::endl;
+     }
+     return id;
+ }
 
 
  unsigned int createShader(const std::string& vertexShader, const std::string& fragementShader)
-{
-    unsigned int program = glCreateProgram();
-    unsigned int vs = compireShader(GL_VERTEX_SHADER, vertexShader);
-    unsigned int fs = compireShader(GL_FRAGMENT_SHADER, fragementShader);
-    glAttachShader(program, vs);
-    glAttachShader(program, fs);
-    glLinkProgram(program);
-    glValidateProgram(program);
-    glDeleteShader(vs);
-    glDeleteShader(fs);
-    return program;
-}
+ {
+     unsigned int program = glCreateProgram();
+     unsigned int vs = compireShader(GL_VERTEX_SHADER, vertexShader);
+     unsigned int fs = compireShader(GL_FRAGMENT_SHADER, fragementShader);
+     GLCall(glAttachShader(program, vs));
+     GLCall(glAttachShader(program, fs));
+     GLCall(glLinkProgram(program));
+     GLCall(glValidateProgram(program));
+     GLCall(glDeleteShader(vs));
+     GLCall(glDeleteShader(fs));
+     return program;
+ }
 
  void glClearError()
  {
@@ -70,7 +70,7 @@
 
  bool glCheckError()
  {
-     while (auto error =glGetError() )
+     while (auto error = glGetError())
      {
          std::cout << "[opengl error]" << error << std::endl;
          return false;

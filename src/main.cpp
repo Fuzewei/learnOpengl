@@ -47,7 +47,7 @@ int main(void)
             2,3,0
         };
         VertexArray vao;
-       
+
         VertexBufferLayout layout;
         layout.push<float>(2);
         VertexBuffer vbo = VertexBuffer(triangle.data(), triangle.size() * sizeof(float));
