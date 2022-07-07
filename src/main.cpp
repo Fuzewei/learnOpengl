@@ -7,6 +7,9 @@
 #include "IndexBuffer.h"
 #include "VertexArray.h"
 #include "VertexBufferLayout.h"
+#include "Shader.h"
+#include "Renderer.h"
+#include "Texture.h"
 
 int main(void)
 {
@@ -33,37 +36,40 @@ int main(void)
     std::cout << glGetString(GL_VERSION) << std::endl;
     {
         std::vector<float> triangle = {
-            -0.5f, -0.5f,
-            0.5f, -0.5f,
-            0.5f, 0.5f,
-            -0.5f, 0.5f
+            -0.5f, -0.5f, 0.0f,0.0f,
+            0.5f, -0.5f, 1.0f,0.0f,
+            0.5f, 0.5f, 1.0f,1.0f,
+            -0.5f, 0.5f,0.0f,1.0f
         };
         std::vector<unsigned int> indices =
         {
             0,1,2,
             2,3,0
         };
+        GLCall(glEnable(GL_BLEND));
+        GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
         VertexArray vao;
-
         VertexBufferLayout layout;
+        layout.push<float>(2);
         layout.push<float>(2);
         VertexBuffer vbo = VertexBuffer(triangle.data(), triangle.size() * sizeof(float));
         vao.addVertexBuffer(vbo, layout);
         IndexBuffer ibo = IndexBuffer(indices.data(), indices.size());
-        ShaderProgram shader = praseShader("res/shaders/base.shader");
-        unsigned int program = createShader(shader.vertexShader, shader.fragmantShader);
-        unsigned int location = glGetUniformLocation(program, "u_Color");
+        Shader shader = Shader("res/shaders/base.shader");
+        
+        Renderer renderer;
+        Texture texture("res/Texture/test.png");
         float r = 0.0f;
         /* Loop until the user closes the window */
         while (!glfwWindowShouldClose(window))
         {
             /* Render here */
             glClear(GL_COLOR_BUFFER_BIT);
-            GLCall(glUseProgram(program));
-            GLCall(glUniform4f(location, r, 0.25, 0.1, 1.0));
-            vao.bind();
-            ibo.bind();
-            GLCall(glDrawElements(GL_TRIANGLES, ibo.getCount(), GL_UNSIGNED_INT, nullptr));
+            texture.bind();
+            shader.bind();
+            shader.setUniform1i("u_Texture", 0);
+            shader.setUniform4f("u_Color", r, 0.25, 0.1, 1.0);
+            renderer.draw(vao, ibo, shader);
             if (r >= 1.0f)
             {
                 r -= 1.0f;

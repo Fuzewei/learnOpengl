@@ -12,24 +12,6 @@
 #define GLCall(x) glClearError();\
     x;\
     ASSERT(glCheckError());
-enum ShaderType
-{
-    NONE = -1,
-    VERTEX = 0,
-    FRAGMENT = 1
-};
-
-struct ShaderProgram
-{
-    std::string vertexShader;
-    std::string fragmantShader;
-};
-
-extern ShaderProgram praseShader(const std::string& filePath);
-
-extern unsigned int compireShader(int type, const std::string& source);
-
-extern unsigned int createShader(const std::string& vertexShader, const std::string& fragementShader);
 
 extern void glClearError();
 
