@@ -2,6 +2,7 @@
 #include <string>
 #include <map>
 #include "types.h"
+#include "glm/gtc/matrix_transform.hpp"
 
 struct ShaderProgram
 {
@@ -25,6 +26,8 @@ public:
 	void unBind() const;
 	void setUniform4f(const std::string &name, float v0, float v1, float v2, float v3);
 	void setUniform1i(const std::string& name, int v0);
+	void setUniformMat4f(const std::string& name, const glm::mat4x4& matrix);
+	
 private:
 	mutable std::map<std::string, int> uniformLocationBuffer;
 	std::string m_FilePath;

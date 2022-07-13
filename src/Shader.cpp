@@ -1,6 +1,7 @@
 #include "Shader.h"
 #include <src/utils/utils.h>
 
+
 Shader::Shader(std::string filePath):
 	m_FilePath(filePath)
 {
@@ -31,6 +32,11 @@ void Shader::setUniform4f(const std::string& name, float v0, float v1, float v2,
 void Shader::setUniform1i(const std::string& name, int v0)
 {
     GLCall(glUniform1i(getUnformNameLocation(name), v0));
+}
+
+void Shader::setUniformMat4f(const std::string& name, const glm::mat4x4 &matrix)
+{
+    glUniformMatrix4fv(getUnformNameLocation(name),1, GL_FALSE, &matrix[0][0]);
 }
 
 int Shader::getUnformNameLocation(const std::string& name) const
