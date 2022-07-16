@@ -2,6 +2,7 @@
 #include <GLFW/glfw3.h>
 #include <iostream>
 #include <vector>
+#include <memory>
 #include "src/utils/utils.h"
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"
@@ -12,13 +13,17 @@
 #include "Texture.h"
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
-#include "imgui/imgui.h"
-#include "imgui/imgui_impl_glfw_gl3.h"
+#include "Editor/Editor.h"
+#include "World.h"
+#include "Object.h"
+#include "Components/Image.h"
+#include "Components/Transform.h"
+
+
 
 int main(void)
 {
     GLFWwindow* window;
-
     /* Initialize the library */
     if (!glfwInit())
         return -1;
@@ -37,17 +42,9 @@ int main(void)
     if (glewInit() != GLEW_OK)
         std::cout << "errr" << std::endl;
 
-
-
     std::cout << glGetString(GL_VERSION) << std::endl;
     {
-        ImGui::CreateContext();
-        ImGuiIO& io = ImGui::GetIO(); 
-        (void)io;
-        ImGui_ImplGlfwGL3_Init(window, true);
-        // Setup style
-        ImGui::StyleColorsDark();
-
+        Editor editor(window);
         std::vector<float> triangle = {
             -50.0f, -50.0f,0.0f,0.0f,
             50.0f, -50.0f, 1.0f,0.0f,
@@ -80,12 +77,22 @@ int main(void)
         bool show_another_window = false;
         ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
+        World& world = World::getInstance();
+        auto obj = std::make_shared<Object>();
+        auto im = std::make_shared<Image>();
+        auto transform = std::make_shared<Transform>();
+        obj->addComponent(im);
+        obj->addComponent(transform);
+        world.addObject(obj);
         /* Loop until the user closes the window */
         while (!glfwWindowShouldClose(window))
         {
             ImGui_ImplGlfwGL3_NewFrame();
             /* Render here */
             glClear(GL_COLOR_BUFFER_BIT);
+            world.Tick();
+
+
             glm::vec3 trans(0);
             ImGui::Begin("ahah");
             ImGui::SliderFloat3("float", &trans.x, -100, 100);
@@ -134,8 +141,7 @@ int main(void)
             glfwPollEvents();
         }
     }
-    ImGui_ImplGlfwGL3_Shutdown();
-    ImGui::DestroyContext();
+
     glfwTerminate();
     return 0;
 }

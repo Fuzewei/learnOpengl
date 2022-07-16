@@ -19,6 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Components\Image.cpp" />
+    <ClCompile Include="src\Components\RendererBase.cpp" />
+    <ClCompile Include="src\Components\Transform.cpp" />
+    <ClCompile Include="src\Editor\Editor.cpp" />
     <ClCompile Include="src\foundation\Singleton.cpp" />
     <ClCompile Include="src\Editor\Panel.cpp" />
     <ClCompile Include="src\Object.cpp" />
@@ -179,6 +183,10 @@
     <None Include="src\vendor\glm\gtx\wrap.inl" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Components\Image.h" />
+    <ClInclude Include="src\Components\RendererBase.h" />
+    <ClInclude Include="src\Components\Transform.h" />
+    <ClInclude Include="src\Editor\Editor.h" />
     <ClInclude Include="src\foundation\Singleton.h" />
     <ClInclude Include="src\Editor\Panel.h" />
     <ClInclude Include="src\Object.h" />

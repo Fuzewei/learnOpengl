@@ -6,10 +6,10 @@ class ComponentBase
 public:
 
 	ComponentBase() {}
-	~ComponentBase() {}
+	virtual ~ComponentBase() {}
 	virtual void Awake() {}
 	virtual void Update() {}
-	virtual void UpdateRenderer() {}
+	virtual void UpdateRender() {}
 private:
 };
 

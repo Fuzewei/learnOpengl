@@ -8,6 +8,8 @@ class Object
 public:
 	Object();
 	~Object();
+	void update();
+	void updateRender();
 	void addComponent(std::shared_ptr<ComponentBase>component);
 	template<typename T>
 	std::shared_ptr<ComponentBase> getComponent();
